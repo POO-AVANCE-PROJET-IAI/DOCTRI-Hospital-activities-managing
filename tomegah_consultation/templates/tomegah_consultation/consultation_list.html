@@ -8,7 +8,7 @@
       class="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200"
     >
       <header class="px-5 py-4 border-b border-gray-100">
-        <h2 class="font-semibold text-gray-800">Vos Patients</h2>
+        <h2 class="font-semibold text-gray-800">Les Consultations de la clinique</h2>
       </header>
       <div class="p-3">
         <div class="overflow-x-auto">
@@ -18,30 +18,30 @@
             >
               <tr>
                 <th class="p-2 whitespace-nowrap">
-                  <div class="font-semibold text-left">code</div>
+                  <div class="font-semibold text-left">Code</div>
                 </th>
                 <th class="p-2 whitespace-nowrap">
-                  <div class="font-semibold text-left">Nom</div>
+                  <div class="font-semibold text-left">Date</div>
                 </th>
                 <th class="p-2 whitespace-nowrap">
-                  <div class="font-semibold text-left">Prénoms</div>
+                  <div class="font-semibold text-left">Date fin validite</div>
                 </th>
                 <th class="p-2 whitespace-nowrap">
-                  <div class="font-semibold text-center">Date de naissance</div>
+                  <div class="font-semibold text-center">Acte medical assoc.</div>
                 </th>
                 <th class="p-2 whitespace-nowrap">
-                  <div class="font-semibold text-center">civilite</div>
+                  <div class="font-semibold text-center">Médécin associé</div>
                 </th>
                 <th class="p-2 whitespace-nowrap">
-                  <div class="font-semibold text-center">Date enr.</div>
+                  <div class="font-semibold text-center">Patient associé</div>
                 </th>
                 <th class="p-2 whitespace-nowrap">
-                  <div class="font-semibold text-center">Actions</div>
+                  <div class="font-semibold text-center">Consult. enr. Par</div>
                 </th>
               </tr>
             </thead>
             <tbody class="text-sm divide-y divide-gray-100">
-              {%for patient in patients%}
+              {%for consultation in consultations%}
               <tr>
                 <td class="p-2 whitespace-nowrap">
                   <div class="flex items-center">
@@ -54,27 +54,27 @@
                         alt="Alex Shatov"
                       />
                     </div>
-                    <div class="font-medium text-gray-800">patient.code</div>
+                    <div class="font-medium text-gray-800">{{consultation.code}}</div>
                   </div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
-                  <div class="text-left">{{patient.nom}}</div>
+                  <div class="text-left">{{consultation.datefinvaliditeconsultation}}</div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
                   <div class="text-left font-medium text-gray-800">
-                    {{patient.prenom}}
+                    {{consultation.acte.libelle}}
                   </div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
                   <div class="text-lg text-center">
-                    {{patient.datenaissance}}
+                    {{consultation.medecin.nom}} {{consultation.medecin.prenom}}
                   </div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
-                  <div class="text-lg text-center">{{patient.civilite}}</div>
+                  <div class="text-lg text-center">{{consultation.patient.nom}} {{consultation.patient.prenom}}</div>
                 </td>
                 <td class="p-2 whitespace-nowrap text-green-500">
-                  <div class="text-lg text-center">{{patient.dateenreg}}</div>
+                  <div class="text-lg text-center">{{consultation.utiilisateur.email}}</div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
                   <div class="text-lg text-center flex justify-center items-center gap-x-2">
@@ -133,8 +133,7 @@
               </tr>
               {%empty%}
               <td>
-                Vous n'avez pas encore de patients ! Donc personne n'est malade
-                ? ça ne vous dit rien ?
+                
               </td>
               {% endfor %}
             </tbody>
@@ -153,33 +152,4 @@
     {% include 'components/_form.html' with form=form %}
   </div>
 </section>
-
-<script>
-  const addPatientBtn = document.getElementById("addPatientBtn");
-  const panel = document.getElementById("panel");
-  const overlay = document.getElementById("overlay");
-  const closePanelBtn = document.getElementById("closePanelBtn");
-
-  addPatientBtn.addEventListener("click", () => {
-    panel.classList.toggle("panel-active");
-    overlay.classList.toggle("overlay-active");
-  });
-
-  closePanelBtn.addEventListener("click", () => {
-    panel.classList.remove("panel-active");
-    overlay.classList.remove("overlay-active");
-  });
-
-  /*
-        overlay.addEventListener('click', () => {
-            closePanel();
-        });
-
-        function closePanel() {
-            panel.classList.add('translate-x-full');
-            overlay.classList.remove('opacity-50');
-            overlay.classList.remove('pointer-events-auto');
-        }*/
-</script>
-
 {% endblock %}

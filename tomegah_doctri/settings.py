@@ -40,6 +40,11 @@ INSTALLED_APPS = [
     'authentication',
     'tomegah_patient',
     'tomegah_personne',
+    'tomegah_type_acte',
+    'tomegah_acte',
+    'tomegah_medecin',
+    'tomegah_specialite',
+    'tomegah_consultation',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,75 @@
+<!-- component -->
+<style>
+  @import url(https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css);
+</style>
+<style>
+  .min-w-80 {
+    min-width: 20rem;
+  }
+  .resize::-webkit-resizer,
+  .resize-x::-webkit-resizer,
+  .resize-y::-webkit-resizer {
+    background-color: transparent;
+  }
+  .resize:after,
+  .resize-x:after,
+  .resize-y:after {
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    content: "\F045D";
+    font: normal normal normal 24px/1 "Material Design Icons";
+    font-size: 24px;
+    text-rendering: auto;
+    line-height: 24px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: rgba(0, 0, 0, 0.3);
+  }
+</style>
+
+<div class="flex justify-between items-center py-5">
+  <div class="w-[30%] md:w-full px-3 mb-6">
+    <button id="addPatientBtn"
+      class="cursor-pointer flex items-center justify-between appearance-none block w-[20%] bg-green-700 text-gray-100 font-bold border border-gray-200 rounded-lg py-3 px-3 leading-tight hover:bg-green-600 focus:outline-none focus:bg-white focus:border-gray-500"
+    >
+      <span class=""> + </span>
+      Nouveau Patient
+    </button>
+  </div>
+
+  <div class="w-[60%]">
+    <div class="flex flex-col p-2 py-6">
+      <div
+        class="bg-white items-center justify-between w-full flex rounded-full shadow-lg p-2 mb-5 sticky"
+        style="top: 5px"
+      >
+        <input
+          class="rounded-full w-full py-4 pl-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
+          type="text"
+          placeholder="Search"
+        />
+
+        <div
+          class="bg-gray-600 p-2 hover:bg-blue-400 cursor-pointer mx-2 rounded-full"
+        >
+          <svg
+            class="w-6 h-6 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

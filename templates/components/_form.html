@@ -1,0 +1,16 @@
+<form method="post" class="p-6 bg-white rounded shadow">
+  {% csrf_token %}
+
+  {% for field in form %}
+      <div class="mb-4">
+          <label class="block mb-2">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+              <p class="text-red-500 text-sm mt-1">{{ field.errors.0 }}</p>
+          {% endif %}
+      </div>
+  {% endfor %}
+
+  <button type="submit" class="cursor-pointer px-4 py-2 text-white bg-green-500 rounded">Enregistrer</button>
+  <button type="button" id="closePanelBtn" class="cursor-poiner px-4 py-2 text-gray-500 border rounded ml-2">Annuler</button>
+</form>

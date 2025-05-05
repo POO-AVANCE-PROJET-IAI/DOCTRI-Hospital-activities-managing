@@ -12,5 +12,8 @@ class Personne(models.Model):
     datenaissance = models.DateField()
     civilite = models.fields.CharField(choices=Civilite.choices, max_length=3)
 
+    class Meta:
+        abstract = True
+        
     def __str__(self):
         return f"{self.nom} {self.prenom}"

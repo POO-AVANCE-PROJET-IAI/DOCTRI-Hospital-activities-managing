@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'dist/styles.css' %}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .panel {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        .panel-active {
+            transform: translateX(0);
+        }
+    </style>
+    <title>Ajouter Patient</title>
+</head>
+<body class="flex min-h-screen bg-gray-100">
+    <div class="flex-1 p-4">
+        <button id="addPatientBtn" class="px-4 py-2 text-white bg-blue-500 rounded md:px-6 md:py-3">Ajouter nouveau patient</button>
+    </div>
+
+    <div id="panel" class="panel fixed top-0 right-0 w-full md:w-1/2 h-full bg-white border-l shadow-lg p-4">
+        <h2 class="text-xl font-bold mb-4">Ajouter un nouveau patient</h2>
+        <form>
+            <div class="mb-4">
+                <label class="block mb-2">Nom</label>
+                <input type="text" class="border rounded w-full p-2" placeholder="Nom du patient" required>
+            </div>
+            <div class="mb-4">
+                <label class="block mb-2">Âge</label>
+                <input type="number" class="border rounded w-full p-2" placeholder="Âge" required>
+            </div>
+            <div class="mb-4">
+                <label class="block mb-2">Adresse</label>
+                <input type="text" class="border rounded w-full p-2" placeholder="Adresse" required>
+            </div>
+            <button type="submit" class="px-4 py-2 text-white bg-green-500 rounded">Enregistrer</button>
+            <button type="button" id="closePanelBtn" class="px-4 py-2 text-gray-500 border rounded ml-2">Annuler</button>
+        </form>
+    </div>
+
+    <script>
+        const addPatientBtn = document.getElementById('addPatientBtn');
+        const panel = document.getElementById('panel');
+        const closePanelBtn = document.getElementById('closePanelBtn');
+
+        addPatientBtn.addEventListener('click', () => {
+            panel.classList.toggle('panel-active');
+        });
+
+        closePanelBtn.addEventListener('click', () => {
+            panel.classList.remove('panel-active');
+        });
+    </script>
+</body>
+</html>
