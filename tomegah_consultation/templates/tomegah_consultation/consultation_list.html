@@ -8,9 +8,19 @@
       class="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200"
     >
       <header class="px-5 py-4 border-b border-gray-100">
-        <h2 class="font-semibold text-gray-800">Les Consultations de la clinique</h2>
+        <h2 class="font-semibold text-gray-800">
+          Les Consultations de la clinique
+        </h2>
       </header>
       <div class="p-3">
+        {% if messages %}
+        <div class="bg-green-100 text-green-800 p-4 rounded-md mb-4">
+          {% for message in messages %}
+          <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+
         <div class="overflow-x-auto">
           <table class="table-auto w-full">
             <thead
@@ -27,7 +37,9 @@
                   <div class="font-semibold text-left">Date fin validite</div>
                 </th>
                 <th class="p-2 whitespace-nowrap">
-                  <div class="font-semibold text-center">Acte medical assoc.</div>
+                  <div class="font-semibold text-center">
+                    Acte medical assoc.
+                  </div>
                 </th>
                 <th class="p-2 whitespace-nowrap">
                   <div class="font-semibold text-center">Médécin associé</div>
@@ -54,11 +66,15 @@
                         alt="Alex Shatov"
                       />
                     </div>
-                    <div class="font-medium text-gray-800">{{consultation.code}}</div>
+                    <div class="font-medium text-gray-800">
+                      {{consultation.code}}
+                    </div>
                   </div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
-                  <div class="text-left">{{consultation.datefinvaliditeconsultation}}</div>
+                  <div class="text-left">
+                    {{consultation.datefinvaliditeconsultation}}
+                  </div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
                   <div class="text-left font-medium text-gray-800">
@@ -71,70 +87,72 @@
                   </div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
-                  <div class="text-lg text-center">{{consultation.patient.nom}} {{consultation.patient.prenom}}</div>
+                  <div class="text-lg text-center">
+                    {{consultation.patient.nom}} {{consultation.patient.prenom}}
+                  </div>
                 </td>
                 <td class="p-2 whitespace-nowrap text-green-500">
-                  <div class="text-lg text-center">{{consultation.utiilisateur.email}}</div>
+                  <div class="text-lg text-center">
+                    {{consultation.utiilisateur.email}}
+                  </div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
-                  <div class="text-lg text-center flex justify-center items-center gap-x-2">
-                    <a href="{% url 'patient.detail' patient.id %}">
+                  <div
+                    class="text-lg text-center flex justify-center items-center gap-x-2"
+                  >
+                    <a href="">
                       <svg
-                      class="h-[20px] w-[20px] text-blue-500"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                      <circle cx="12" cy="12" r="3" />
-                    </svg>
-
-                    </a>
-                    
-                    <a href="{% url 'patient.detail' patient.id %}">
-                      <svg
-                    class="text-yellow-500"
-                      xmlns="http://www.w3.org/2000/svg"
-                      x="0px"
-                      y="0px"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 50 50"
-                    >
-                      <path
-                        d="M 43.050781 1.9746094 C 41.800781 1.9746094 40.549609 2.4503906 39.599609 3.4003906 L 38.800781 4.1992188 L 45.699219 11.099609 L 46.5 10.300781 C 48.4 8.4007812 48.4 5.3003906 46.5 3.4003906 C 45.55 2.4503906 44.300781 1.9746094 43.050781 1.9746094 z M 37.482422 6.0898438 A 1.0001 1.0001 0 0 0 36.794922 6.3925781 L 4.2949219 38.791016 A 1.0001 1.0001 0 0 0 4.0332031 39.242188 L 2.0332031 46.742188 A 1.0001 1.0001 0 0 0 3.2578125 47.966797 L 10.757812 45.966797 A 1.0001 1.0001 0 0 0 11.208984 45.705078 L 43.607422 13.205078 A 1.0001 1.0001 0 1 0 42.191406 11.794922 L 9.9921875 44.09375 L 5.90625 40.007812 L 38.205078 7.8085938 A 1.0001 1.0001 0 0 0 37.482422 6.0898438 z"
-                      ></path>
-                    </svg>
-                    
-                    </a>
-                    
-                    <a href="{% url 'patient.delete' patient.id %}">
-                      <svg
-                      class="h-[20px] w-[20px] text-red-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
+                        class="h-[20px] w-[20px] text-blue-500"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      />
-                    </svg>
-
+                      >
+                        <path
+                          d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                        />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
                     </a>
-                    
+
+                    <a href="">
+                      <svg
+                        class="text-yellow-500"
+                        xmlns="http://www.w3.org/2000/svg"
+                        x="0px"
+                        y="0px"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 50 50"
+                      >
+                        <path
+                          d="M 43.050781 1.9746094 C 41.800781 1.9746094 40.549609 2.4503906 39.599609 3.4003906 L 38.800781 4.1992188 L 45.699219 11.099609 L 46.5 10.300781 C 48.4 8.4007812 48.4 5.3003906 46.5 3.4003906 C 45.55 2.4503906 44.300781 1.9746094 43.050781 1.9746094 z M 37.482422 6.0898438 A 1.0001 1.0001 0 0 0 36.794922 6.3925781 L 4.2949219 38.791016 A 1.0001 1.0001 0 0 0 4.0332031 39.242188 L 2.0332031 46.742188 A 1.0001 1.0001 0 0 0 3.2578125 47.966797 L 10.757812 45.966797 A 1.0001 1.0001 0 0 0 11.208984 45.705078 L 43.607422 13.205078 A 1.0001 1.0001 0 1 0 42.191406 11.794922 L 9.9921875 44.09375 L 5.90625 40.007812 L 38.205078 7.8085938 A 1.0001 1.0001 0 0 0 37.482422 6.0898438 z"
+                        ></path>
+                      </svg>
+                    </a>
+
+                    <a href="">
+                      <svg
+                        class="h-[20px] w-[20px] text-red-500"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    </a>
                   </div>
                 </td>
               </tr>
               {%empty%}
-              <td>
-                
-              </td>
+              <td></td>
               {% endfor %}
             </tbody>
           </table>
@@ -148,7 +166,7 @@
     id="panel"
     class="panel fixed top-0 right-0 w-full md:w-1/2 h-full bg-white border-l shadow-lg p-4"
   >
-    <h2 class="text-xl font-bold mb-4">Ajouter un nouveau patient</h2>
+    <h2 class="text-xl font-bold mb-4">Ajouter un nouvelle consultation</h2>
     {% include 'components/_form.html' with form=form %}
   </div>
 </section>

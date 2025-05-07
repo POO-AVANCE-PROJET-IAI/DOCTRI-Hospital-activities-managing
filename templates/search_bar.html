@@ -36,9 +36,16 @@
     <button id="addPatientBtn"
       class="cursor-pointer flex items-center justify-between appearance-none block w-[20%] bg-green-700 text-gray-100 font-bold border border-gray-200 rounded-lg py-3 px-3 leading-tight hover:bg-green-600 focus:outline-none focus:bg-white focus:border-gray-500"
     >
-      <span class=""> + </span>
-      Nouveau Patient
-    </button>
+    {% if request.resolver_match.view_name != "patients.index" %}
+  <a href="{{ lien_nouveau }}"
+    class="cursor-pointer flex items-center justify-between appearance-none block w-[20%] bg-green-700 text-gray-100 font-bold border border-gray-200 rounded-lg py-3 px-3 leading-tight hover:bg-green-600 focus:outline-none focus:bg-white focus:border-gray-500">
+    <span> + </span>
+    Nouveau
+  </a>
+  {%else%}
+    <span> + </span>
+    Nouveau
+{% endif %}
   </div>
 
   <div class="w-[60%]">
