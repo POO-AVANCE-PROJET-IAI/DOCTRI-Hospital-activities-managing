@@ -1,0 +1,57 @@
+<form
+  method="post"
+  class="p-6 bg-white rounded shadow"
+  action="{% url 'ordonnance.index' %}"
+>
+  {% csrf_token %}
+
+  {% if selected_consultation %}
+  <input type="hidden" name="consultation_id" value="{{ selected_consultation.id }}">
+{% endif %}
+
+  {% for field in ordonnanceForm %}
+    <div class="mb-4">
+      <label class="block mb-2">{{ field.label }}</label>
+      {{ field }}
+      {% if field.errors %}
+        <p class="text-red-500 text-sm mt-1">{{ field.errors.0 }}</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <input type="hidden" id="id_consultation" name="consultation" />
+
+  <hr class="my-6 border-t" />
+
+  <h3 class="text-lg font-semibold mb-4">Médicaments</h3>
+
+  {{ detailFormset.management_form }}
+  {% for form in detailFormset %}
+    <div class="mb-4 border rounded p-4 bg-gray-50">
+      {% for field in form.visible_fields %}
+        <div class="mb-2">
+          <label class="block mb-1">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <p class="text-red-500 text-sm mt-1">{{ field.errors.0 }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+
+  <button
+    type="submit"
+    class="cursor-pointer px-4 py-2 text-white bg-green-500 rounded"
+  >
+    Enregistrer
+  </button>
+
+  <button
+    type="button"
+    id="closePanelBtn"
+    class="cursor-pointer px-4 py-2 text-gray-500 border rounded ml-2"
+  >
+    Annuler
+  </button>
+</form>

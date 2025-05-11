@@ -4,23 +4,31 @@
   <table class="w-full">
     <thead>
       <tr class="bg-gray-200">
+        <th class="px-4 py-2 text-left text-sm font-medium">Sélectionner</th>
         <th class="px-4 py-2 text-left text-sm font-medium">Id</th>
         <th class="px-4 py-2 text-left text-sm font-medium">Date Consultation</th>
         <th class="px-4 py-2 text-left text-sm font-medium">Acte effectué</th>
         <th class="px-4 py-2 text-left text-sm font-medium">Medecin affecté</th>
+        <th class="px-4 py-2 text-left text-sm font-medium">Actions</th>
+
       </tr>
     </thead>
     <tbody>
       {% for consultation in consultations%}
       {% if consultation.acte %}
-      <tr>
+      <tr class="border px-4 py-2 text-sm text-center">
+        <td>
+          <input
+            type="radio"
+            name="selected_consultation"
+            value="{{ consultation.id }}"
+            class="consultation-radio"
+          />
+        </td>
         <td class="border px-4 py-2 text-sm">{{ consultation.id }}</td>
         <td class="border px-4 py-2 text-sm">{{ consultation.dateconsultation }}</td>
         <td class="border px-4 py-2 text-sm">{{ consultation.acte.libelle_acte }}</td>
         <td class="border px-4 py-2 text-sm">{{ consultation.medecin.nom }} {{ consultation.medecin.prenom }}</td>
-        <td class="border px-4 py-2 text-sm">
-
-        </td>
         <td class="border px-4 py-2 text-sm">
             <a href="{%url 'facture.create' consultation.id %}" class="inline-block" title="Factures">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -33,4 +41,12 @@
       {% endfor %}
     </tbody>
   </table>
+  <button
+  id="add-consultation-to-form"
+  type="button"
+  class="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
+>
+  Ajouter à l’ordonnance
+</button>
+
   

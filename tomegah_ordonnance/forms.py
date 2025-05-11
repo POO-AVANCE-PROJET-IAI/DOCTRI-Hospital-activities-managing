@@ -5,6 +5,7 @@ from tomegah_ordonnance.models import Ordonnance
 class OrdonnanceForm(forms.ModelForm):
     class Meta:
         model = Ordonnance
+        fields = ['date_ordonnance', 'medecin']
         exclude = [
             "code_ordonnance",
         ]

@@ -1,39 +1,72 @@
-<div class="flex flex-col lg:flex-row gap-8">
-  <!-- Colonne gauche : tableaux -->
-  <div class="w-full lg:w-1/2 space-y-6">
-    <!-- Table consultations -->
-    <div class="bg-white shadow-md rounded-lg p-4">
-      <h2 class="text-lg font-bold mb-2 text-gray-700">Consultations</h2>
-      {% include "partials/_consultations_table.html" %}
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex flex-col lg:flex-row gap-12 p-6 bg-gray-100 min-h-screen">
+
+  <!-- Colonne Gauche : Consultations + Ordonnances -->
+  <div class="w-full lg:w-1/2 space-y-8 mr-4">
+
+    <!-- Bloc Consultation -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Consultations</h2>
+      {% if consultations %}
+        {% include "partials/_consultation_table.html" %}
+      {% else %}
+        <p class="text-red-500 font-medium">Aucune consultation choisie</p>
+      {% endif %}
     </div>
 
-    <!-- Table ordonnances -->
-    <div class="bg-white shadow-md rounded-lg p-4">
-      <h2 class="text-lg font-bold mb-2 text-gray-700">Ordonnances</h2>
+    <!-- Bloc Ordonnances -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Ordonnances existantes</h2>
       {% include "partials/_ordonnances_table.html" %}
     </div>
+
   </div>
 
-  <!-- Colonne droite : formulaires -->
-  <div class="w-full lg:w-1/2 space-y-6">
-    <!-- Formulaire médicament -->
-    <form id="medicament-form" method="post" class="bg-white shadow-md rounded-lg p-6">
-      {% csrf_token %}
-      <h2 class="text-lg font-semibold mb-4 text-center">Ajouter un médicament</h2>
-      {% include "partials/_form_medicament.html" %}
-      <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded">
-        Ajouter médicament
-      </button>
-    </form>
+  <!-- Colonne Droite : Formulaire Ordonnance -->
+  <div class="w-full lg:w-1/2 mx-4">
 
-    <!-- Formulaire ordonnance -->
-    <form id="ordonnance-form" method="post" class="bg-white shadow-md rounded-lg p-6">
-      {% csrf_token %}
-      <h2 class="text-lg font-semibold mb-4 text-center">Créer une ordonnance</h2>
-      {% include "partials/_form_ordonnance.html" %}
-      <button class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded">
-        Créer ordonnance
-      </button>
-    </form>
+    <div class="bg-white shadow-lg rounded-lg p-6">
+      <h2 class="text-xl font-semibold text-center text-green-700 mb-6">
+        Créer une ordonnance
+      </h2>
+
+      <form
+        id="ordonnance-form"
+        method="post"
+        action="{% url 'ordonnance.index' %}"
+        class="space-y-6"
+      >
+        {% csrf_token %}
+        {% include "partials/_form_ordonnance.html" %}
+
+        <button
+          type="submit"
+          class="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded"
+        >
+          Créer ordonnance
+        </button>
+      </form>
+    </div>
+
   </div>
 </div>
+
+<!-- Script pour lier la consultation -->
+<script>
+  document
+    .getElementById("add-consultation-to-form")
+    ?.addEventListener("click", function () {
+      const selectedRadio = document.querySelector(
+        "input.consultation-radio:checked"
+      );
+      if (selectedRadio) {
+        document.getElementById("id_consultation").value = selectedRadio.value;
+        alert("Consultation ajoutée au formulaire !");
+      } else {
+        alert("Veuillez sélectionner une consultation.");
+      }
+    });
+</script>
+{% endblock %}

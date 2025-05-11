@@ -3,5 +3,7 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.home, name="ordonnance.index"),
+    path('', views.home, name="medicament.index"),
+
+
 ]

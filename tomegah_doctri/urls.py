@@ -24,5 +24,6 @@ urlpatterns = [
     path('consultations', include('tomegah_consultation.urls')),
     path('factures', include('tomegah_facture.urls')),
     path('ordonnances', include('tomegah_ordonnance.urls')),
+    path('medicaments', include('tomegah_medicament.urls')),
 
 ]

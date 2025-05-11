@@ -31,6 +31,7 @@
     --color-blue-800: oklch(42.4% 0.199 265.638);
     --color-indigo-500: oklch(58.5% 0.233 277.117);
     --color-indigo-600: oklch(51.1% 0.262 276.966);
+    --color-indigo-700: oklch(45.7% 0.24 277.023);
     --color-pink-500: oklch(65.6% 0.241 354.308);
     --color-gray-50: oklch(98.5% 0.002 247.839);
     --color-gray-100: oklch(96.7% 0.003 264.542);
@@ -265,9 +266,6 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
-  .top-1 {
-    top: calc(var(--spacing) * 1);
-  }
   .top-1\/2 {
     top: calc(1/2 * 100%);
   }
@@ -316,11 +314,17 @@
   .mx-2 {
     margin-inline: calc(var(--spacing) * 2);
   }
+  .mx-4 {
+    margin-inline: calc(var(--spacing) * 4);
+  }
   .mx-8 {
     margin-inline: calc(var(--spacing) * 8);
   }
   .mx-auto {
     margin-inline: auto;
+  }
+  .my-6 {
+    margin-block: calc(var(--spacing) * 6);
   }
   .ms-4 {
     margin-inline-start: calc(var(--spacing) * 4);
@@ -351,6 +355,9 @@
   }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
+  }
+  .mr-4 {
+    margin-right: calc(var(--spacing) * 4);
   }
   .mb-1 {
     margin-bottom: calc(var(--spacing) * 1);
@@ -450,9 +457,6 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  .w-1 {
-    width: calc(var(--spacing) * 1);
-  }
   .w-1\/2 {
     width: calc(1/2 * 100%);
   }
@@ -471,9 +475,6 @@
   .w-20 {
     width: calc(var(--spacing) * 20);
   }
-  .w-40 {
-    width: calc(var(--spacing) * 40);
-  }
   .w-\[20\%\] {
     width: 20%;
   }
@@ -482,9 +483,6 @@
   }
   .w-\[30\%\] {
     width: 30%;
-  }
-  .w-\[50\%\] {
-    width: 50%;
   }
   .w-\[60\%\] {
     width: 60%;
@@ -525,9 +523,6 @@
   .flex-\[7\] {
     flex: 7;
   }
-  .flex-shrink {
-    flex-shrink: 1;
-  }
   .flex-shrink-0 {
     flex-shrink: 0;
   }
@@ -542,10 +537,6 @@
   }
   .translate-x-full {
     --tw-translate-x: 100%;
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-  .-translate-y-1 {
-    --tw-translate-y: calc(var(--spacing) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .-translate-y-1\/2 {
@@ -568,9 +559,6 @@
   }
   .cursor-pointer {
     cursor: pointer;
-  }
-  .resize {
-    resize: both;
   }
   .appearance-none {
     appearance: none;
@@ -625,6 +613,9 @@
   }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
+  }
+  .gap-12 {
+    gap: calc(var(--spacing) * 12);
   }
   .space-y-1 {
     :where(& > :not(:last-child)) {
@@ -747,17 +738,11 @@
   .bg-black {
     background-color: var(--color-black);
   }
-  .bg-blue-50 {
-    background-color: var(--color-blue-50);
-  }
   .bg-blue-500 {
     background-color: var(--color-blue-500);
   }
   .bg-blue-600 {
     background-color: var(--color-blue-600);
-  }
-  .bg-blue-700 {
-    background-color: var(--color-blue-700);
   }
   .bg-gray-50 {
     background-color: var(--color-gray-50);
@@ -768,9 +753,6 @@
   .bg-gray-200 {
     background-color: var(--color-gray-200);
   }
-  .bg-gray-500 {
-    background-color: var(--color-gray-500);
-  }
   .bg-gray-500\/75 {
     background-color: color-mix(in srgb, oklch(55.1% 0.027 264.364) 75%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -779,9 +761,6 @@
   }
   .bg-gray-600 {
     background-color: var(--color-gray-600);
-  }
-  .bg-gray-700 {
-    background-color: var(--color-gray-700);
   }
   .bg-gray-800 {
     background-color: var(--color-gray-800);
@@ -801,14 +780,8 @@
   .bg-green-600 {
     background-color: var(--color-green-600);
   }
-  .bg-green-700 {
-    background-color: var(--color-green-700);
-  }
-  .bg-orange-400 {
-    background-color: var(--color-orange-400);
-  }
-  .bg-orange-700 {
-    background-color: var(--color-orange-700);
+  .bg-indigo-600 {
+    background-color: var(--color-indigo-600);
   }
   .bg-red-100 {
     background-color: var(--color-red-100);
@@ -1110,10 +1083,6 @@
   .ring-gray-300 {
     --tw-ring-color: var(--color-gray-300);
   }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
-  }
   .outline-1 {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
@@ -1240,6 +1209,13 @@
       }
     }
   }
+  .hover\:bg-indigo-700 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-indigo-700);
+      }
+    }
+  }
   .hover\:bg-red-500 {
     &:hover {
       @media (hover: hover) {
@@ -1273,11 +1249,6 @@
       @media (hover: hover) {
         color: var(--color-indigo-500);
       }
-    }
-  }
-  .focus\:border-gray-500 {
-    &:focus {
-      border-color: var(--color-gray-500);
     }
   }
   .focus\:border-gray-600 {
