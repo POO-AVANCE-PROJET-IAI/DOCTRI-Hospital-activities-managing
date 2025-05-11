@@ -1,46 +1,116 @@
-{%extends 'base.html'%} {%block content%} {% if form.errors %} {{ form.errors }}
-{% endif %}
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  {% if messages %}
-  <div class="bg-green-100 text-green-800 p-4 rounded-md mb-4">
-    {% for message in messages %}
-    <p>{{ message }}</p>
-    {% endfor %}
-  </div>
-  {% endif %}
-
-  <form method="post" class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
-    {% csrf_token %}
-    <h2 class="text-2xl font-bold mb-6 text-center">Créer une Consultation</h2>
-
-    {% for field in form %}
-    <div class="mb-4">
-      <label
-        for="{{ field.id_for_label }}"
-        class="block text-gray-700 text-sm font-bold mb-2"
-        >{{ field.label }}</label
-      >
-
-      <!-- Ajout direct des classes Tailwind -->
-      <div class="border rounded-lg p-2 w-full">{{ field }}</div>
-
-      {% if field.errors %}
-      <p class="text-red-500 text-xs italic">
-        {% for error in field.errors %}
-        <span>{{ error }}</span><br />
-        {% endfor %}
-      </p>
-      {% endif %}
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex justify-between px-12 py-8 max-w-[1600px] mx-auto">
+  <!-- Colonne de gauche (40%) -->
+  <div class="flex flex-col space-y-6 flex-[3]">
+    <!-- Infos Patients -->
+    <div class="infos-patient relative">
+      <div class="absolute -inset-1">
+        <div class="w-full h-full rotate-180 opacity-20 blur-lg filter bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600"></div>
+      </div>
+      <div class="relative overflow-hidden bg-white shadow-md rounded-lg">
+        <div class="p-4">
+          <svg class="w-8 h-8 mx-auto text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 8L20 8" stroke="#111827" stroke-width="1.5" stroke-linecap="round"></path>
+            <path d="M4 16L14 16" stroke="#111827" stroke-width="1.5" stroke-linecap="round"></path>
+            <ellipse cx="7" cy="8" rx="2" ry="2" transform="rotate(90 7 8)" stroke="#111827" stroke-width="1.5" stroke-linecap="round"></ellipse>
+            <ellipse cx="17" cy="16" rx="2" ry="2" transform="rotate(90 17 16)" stroke="#111827" stroke-width="1.5" stroke-linecap="round"></ellipse>
+          </svg>
+          <h3 class="text-lg font-medium text-gray-900 mt-4 text-center">Informations Patients</h3>
+          <div class="flex flex-col items-start mt-2">
+            <p class="text-sm text-gray-600"><strong>Code:</strong> {{ patient.code }}</p>
+            <p class="text-sm text-gray-600"><strong>Nom:</strong> {{ patient.nom }}</p>
+            <p class="text-sm text-gray-600"><strong>Prenom:</strong> {{ patient.prenom }}</p>
+            <p class="text-sm text-gray-600"><strong>Date de naissance:</strong> {{ patient.datenaissance }}</p>
+            <p class="text-sm text-gray-600"><strong>Civilite:</strong> {{ patient.civilite }}</p>
+            <p class="text-sm text-gray-600"><strong>Date Enregistrement:</strong> {{ patient.dateenreg }}</p>
+          </div>
+        </div>
+      </div>
     </div>
-    {% endfor %}
 
-    <button
-      type="submit"
-      class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-    >
-      Ajouter
-    </button>
-  </form>
+    <!-- Formulaire -->
+    <form method="post" class="bg-white shadow-md rounded-lg p-6">
+      {% csrf_token %}
+      <h2 class="text-lg font-medium mb-4 text-center">Créer une Consultation</h2>
+
+      {% if form.errors %}
+      <div class="text-red-500 mb-4 text-center">{{ form.errors }}</div>
+      {% endif %}
+
+      <div class="grid grid-cols-1 gap-4">
+        {% for field in form %}
+        <div>
+          <label for="{{ field.id_for_label }}" class="block text-gray-700 text-sm font-semibold mb-1">{{ field.label }}</label>
+          <div class="border rounded-lg p-2 w-full">{{ field }}</div>
+          {% if field.errors %}
+          <p class="text-red-500 text-xs italic mt-1">
+            {% for error in field.errors %}
+            <span>{{ error }}</span><br />
+            {% endfor %}
+          </p>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+      <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">Ajouter</button>
+    </form>
+  </div>
+
+  <!-- Colonne de droite (tableau, 2/5) -->
+  <div class="flex-[7] mx-8"> 
+    <div class="bg-white shadow-md rounded-lg p-6 w-full">
+      <h3 class="text-lg font-medium text-gray-900 mb-4 text-center">Patients Consultations</h3>
+      <table class="w-full">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="px-4 py-2 text-left text-sm font-medium">Id</th>
+            <th class="px-4 py-2 text-left text-sm font-medium">Date Consultation</th>
+            <th class="px-4 py-2 text-left text-sm font-medium">Patient</th>
+            <th class="px-4 py-2 text-left text-sm font-medium">Enregistré par .</th>
+            <th class="px-4 py-2 text-left text-sm font-medium">Actions</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for consultation in consultations %}
+          <tr>
+            <td class="border px-4 py-2 text-sm">{{ consultation.id }}</td>
+            <td class="border px-4 py-2 text-sm">{{ consultation.dateconsultation }}</td>
+            <td class="border px-4 py-2 text-sm">{{ consultation.patient.nom }}</td>
+            <td class="border px-4 py-2 text-sm">{{ consultation.utilisateur.email }}</td>
+            <td class="border px-4 py-2 text-sm">
+              <a href="">
+              <svg
+              class="h-[20px] w-[20px] text-blue-500"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+
+           </td>
+
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
+{% if messages %}
+<div class="bg-green-100 text-green-800 p-4 rounded-md mb-4 text-center">
+  {% for message in messages %}
+  <p>{{ message }}</p>
+  {% endfor %}
+</div>
+{% endif %}
 {% endblock %}

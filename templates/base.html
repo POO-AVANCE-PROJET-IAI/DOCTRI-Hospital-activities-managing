@@ -10,35 +10,30 @@
     <link rel="stylesheet" href="{% static 'dist/styles.css' %}" />
     <style>
       .panel {
-          transition: transform 0.3s ease-in-out;
-          transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        transform: translateX(100%);
       }
       .panel-active {
-          transform: translateX(0);
+        transform: translateX(0);
       }
       .overlay {
-          transition: opacity 0.3s ease-in-out;
-          opacity: 0;
-          pointer-events: none;
+        transition: opacity 0.3s ease-in-out;
+        opacity: 0;
+        pointer-events: none;
       }
       .overlay-active {
-          opacity: 0.5;
-          pointer-events: all;
+        opacity: 0.5;
+        pointer-events: all;
       }
-  </style>
+    </style>
   </head>
-  <body class="flex max-h-screen h-screen bg-gray-100 w-screen">
-    {% if user.is_authenticated %}
-    {% include "header.html" %}
-  {% endif %}
-    
-    <div class="flex-1 flex flex-col">
-      <main class="flex-grow p-4">
-        {% block content %} 
-        {% endblock content %}
-      </main>
-      {% include "footer.html" %}
-    </div>
+
+  <body class="flex max-h-screen h-screen bg-gray-100 w-screen overflow-hidden">
+    {% if user.is_authenticated %} {% include "header.html" %} {% endif %}
+    <main class="ml-20 h-screen overflow-y-auto w-full">
+      {% block content %} {% endblock content %}
+    </main>
+    {% include "footer.html" %}
 
     <script src="" async defer></script>
   </body>

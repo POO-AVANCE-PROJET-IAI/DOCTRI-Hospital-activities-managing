@@ -45,7 +45,13 @@ INSTALLED_APPS = [
     'tomegah_medecin',
     'tomegah_specialite',
     'tomegah_consultation',
+    'tomegah_facture',
+    'tomegah_facture_detail',
+    'tomegah_ordonnance',
+    'tomegah_medicament',
+    'tomegah_ordonnance_detail',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

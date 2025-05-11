@@ -1,0 +1,176 @@
+{% extends 'base.html' %} {% block content %}
+<div class="max-w-[1600px] mx-auto px-12 py-8 space-y-8">
+  <!-- Zone infos consultation + formulaire côte à côte -->
+  <div class="flex justify-between gap-8">
+    <!-- Infos Consultation -->
+    <div class="infos-patient relative w-1/2">
+      <div class="absolute -inset-1">
+        <div
+          class="w-full h-full rotate-180 opacity-20 blur-lg filter bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600"
+        ></div>
+      </div>
+      <div class="relative overflow-hidden bg-white shadow-md rounded-lg">
+        <div class="p-4">
+          <svg
+            class="w-8 h-8 mx-auto text-gray-400"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M11 8L20 8"
+              stroke="#111827"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            ></path>
+            <path
+              d="M4 16L14 16"
+              stroke="#111827"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            ></path>
+            <ellipse
+              cx="7"
+              cy="8"
+              rx="2"
+              ry="2"
+              transform="rotate(90 7 8)"
+              stroke="#111827"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            ></ellipse>
+            <ellipse
+              cx="17"
+              cy="16"
+              rx="2"
+              ry="2"
+              transform="rotate(90 17 16)"
+              stroke="#111827"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            ></ellipse>
+          </svg>
+          <h3 class="text-lg font-medium text-gray-900 mt-4 text-center">
+            Informations Consultations
+          </h3>
+          <div class="flex flex-col items-start mt-2 space-y-1">
+            <p class="text-sm text-gray-600">
+              <strong>Patient:</strong> {{ consultation_actuelle.patient.nom }} {{ consultation_actuelle.patient.prenom }}
+            </p>
+            <p class="text-sm text-gray-600">
+              <strong>Date:</strong> {{ consultation_actuelle.dateconsultation }}
+            </p>
+            <p class="text-sm text-gray-600">
+              <strong>Date de fin validité:</strong>
+               {{consultation_actuelle.datefinvaliditeconsultation }}
+            </p>
+            <p class="text-sm text-gray-600">
+              <strong>Age Patient:</strong> {{consultation_actuelle.agePatient }}
+            </p>
+            <p class="text-sm text-gray-600">
+              <strong>Date de naissance:</strong> {{consultation_actuelle.patient.datenaissance }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <form
+      id="acte-form"
+      method="post"
+      class="bg-white shadow-md rounded-lg p-6 w-1/2"
+    >
+      {% csrf_token %}
+      <h2 class="text-lg font-medium mb-4 text-center">
+        Ajouter un acte médical
+      </h2>
+
+      {% if form.errors %}
+      <div class="text-red-500 mb-4 text-center">{{ form.errors }}</div>
+      {% endif %}
+
+      <div class="grid grid-cols-2 gap-4">
+        {% for field in form %}
+        <div>
+          <label
+            for="{{ field.id_for_label }}"
+            class="block text-gray-700 text-sm font-semibold mb-1"
+            >{{ field.label }}</label
+          >
+          <div class="border rounded-lg p-2 w-full">{{ field }}</div>
+          {% if field.errors %}
+          <p class="text-red-500 text-xs italic mt-1">
+            {% for error in field.errors %}
+            <span>{{ error }}</span><br />
+            {% endfor %}
+          </p>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
+      >
+        Ajouter
+      </button>
+    </form>
+  </div>
+
+  <div class="bg-white shadow-md rounded-lg p-6">
+    <div id="actes-table-wrapper">
+      {% include "partials/_actes_table.html" %}
+    </div>
+    <div class="text-red-500">{% include "partials/_form_errors.html" %}</div>
+  </div>
+
+  <div id="messages-wrapper">
+    {% include "partials/_success_message.html" %}
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("acte-form");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault(); 
+
+      const formData = new FormData(form);
+      const url = form.getAttribute("action") || window.location.href;
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        document.getElementById("actes-table-wrapper").innerHTML =
+          data.table_html;
+        form.reset(); 
+        const messageWrapper = document.getElementById("messages-wrapper");
+        messageWrapper.innerHTML = data.message_html;
+
+        setTimeout(() => {
+          messageWrapper.style.transition = "opacity 1s ease";
+          messageWrapper.style.opacity = 0;
+
+          setTimeout(() => {
+            messageWrapper.innerHTML = "";
+            messageWrapper.style.opacity = 1; 
+          }, 1000); /
+        }, 3000);
+      } else {
+        const errorsDiv = document.querySelector(".text-red-500");
+        errorsDiv.innerHTML = data.errors_html;
+      }
+    });
+  });
+</script>
+
+{% endblock %}

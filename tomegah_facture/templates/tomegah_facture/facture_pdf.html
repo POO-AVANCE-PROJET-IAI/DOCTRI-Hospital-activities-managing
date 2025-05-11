@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Facture {{ facture.code_facture }}</title>
+    <style>
+        body {
+            font-family: 'DejaVu Sans', sans-serif;
+            margin: 40px;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f5f5f5;
+        }
+
+        .total {
+            font-weight: bold;
+            color: #2980b9;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>DOCTRI</h1>
+    <h2>Facture #{{ facture.code_facture }}</h1>
+    <p>Date de création : {{ facture.dateenreg_facture|date:"d/m/Y" }}</p>
+</div>
+
+<div class="section">
+    <h2>Informations sur la facture</h2>
+    <table>
+        <tr>
+            <th>Type</th>
+            <td>{{ facture.typefacture }}</td>
+        </tr>
+        <tr>
+            <th>Montant total</th>
+            <td>{{ facture.montant_facture }} FCFA</td>
+        </tr>
+        <tr>
+            <th>Montant payé</th>
+            <td>{{ facture.montant_payefacture }} FCFA</td>
+        </tr>
+        <tr>
+            <th>Reste à payer</th>
+            <td>
+                {% with facture.montant_facture|floatformat:0|add:"-`facture.montant_payefacture`"|floatformat:0 as reste %}
+                    {% if reste|floatformat:0 == "0" %}
+                        Aucun reste
+                    {% else %}
+                        {{ reste }} FCFA
+                    {% endif %}
+                {% endwith %}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="section">
+    <h2>Détails de la consultation</h2>
+    <table>
+        <tr>
+            <th>Patient</th>
+            <td>{{ facture.consultation.patient.nom }} {{ facture.consultation.patient.prenom }}</td>
+        </tr>
+        <tr>
+            <th>Consultations</th>
+            <td>{{ facture.consultation.acte.libelle_acte }}</td>
+        </tr>
+        <tr>
+            <th>Médecin chargé</th>
+            <td>{{ facture.medecin }}</td>
+        </tr>
+        <tr>
+            <th>Date de la consultation</th>
+            <td>{{ facture.consultation.dateconsultation|date:"d/m/Y" }}</td>
+        </tr>
+    </table>
+</div>
+
+<div class="footer">
+    Merci de votre confiance. Gardez précieusement cette facture s'il vous plait. <span class="text-blue-600 font-bold"> DOCTRI Votre santé, notre combat. </span>
+</div>
+
+</body>
+</html>

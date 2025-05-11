@@ -8,3 +8,6 @@ class Acte(models.Model):
     montant_acte = models.IntegerField()
     type_acte = models.ForeignKey(TypeActe, on_delete=models.CASCADE)
     Specialite = models.ForeignKey('tomegah_specialite.Specialite', on_delete=models.CASCADE)
+    
+    def __str__(self):
+                return f"{self.libelle_acte}"

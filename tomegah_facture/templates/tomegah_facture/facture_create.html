@@ -1,0 +1,159 @@
+{% extends 'base.html' %} {% block content %}
+
+<div
+  class="grid grid-cols-1 lg:grid-cols-3 gap-8 p-6 text-gray-800 font-light text-sm leading-relaxed"
+>
+  <!-- Filtres -->
+  <div class="col-span-2 bg-white rounded-2xl shadow-md p-6 space-y-4">
+    <div
+      class="p-6 bg-white rounded-lg shadow text-gray-800 space-y-6 text-sm font-light"
+    >
+      <h2 class="text-orange-600 font-semibold text-lg">Enregistrement</h2>
+
+      <!-- INFO CONSULTATION -->
+      <div>
+        <div
+          class="bg-gray-100 px-4 py-2 rounded-t-md font-semibold flex items-center gap-2"
+        >
+          <span class="text-gray-500">🏥</span>
+          INFORMATION CONSULTATION
+        </div>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-gray-100 rounded-b-md"
+        >
+          <input
+            type="text"
+            value="Patient: {{ consultation.patient.nom }}"
+            class="border border-gray-300 rounded-md px-3 py-2"
+            readonly
+          />
+         
+        
+          <input
+            type="text"
+            value="Date: {{ consultation.dateconsultation }}"
+            class="border border-gray-300 rounded-md px-3 py-2"
+            readonly
+          />
+        </div>
+      </div>
+
+      <!-- PRESCRIPTIONS -->
+      <div>
+        <div
+          class="bg-gray-100 px-4 py-2 rounded-t-md font-semibold flex items-center justify-between"
+        >
+          <div class="flex items-center gap-2 text-gray-500">
+            🧾 PRESCRIPTIONS
+          </div>
+          <button
+            class="border border-gray-400 px-3 py-1 text-sm rounded hover:bg-gray-100 flex items-center gap-1"
+          >
+            🖨️ Imprimer
+          </button>
+        </div>
+      </div>
+
+      <!-- CHIRURGIES -->
+      <div>
+        <div
+          class="bg-gray-100 px-4 py-2 rounded-t-md font-semibold flex items-center gap-2"
+        >
+          🏷️ CHIRURGIES ET ACTES
+        </div>
+        <div class="border border-gray-100 rounded-b-md p-4 overflow-x-auto">
+          <table class="min-w-full table-auto text-sm">
+            <thead class="text-left text-gray-500 border-b">
+              <tr>
+                <th class="p-2">Num</th>
+                <th class="p-2">Type</th>
+                <th class="p-2">Libelle acte</th>
+                <th class="p-2">Medecin chargé</th>
+                <th class="p-2">Montant</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="p-2">{{ consultation.id }}</td>
+                <td class="p-2">{{ consultation.acte.type_acte.libelle }}</td>
+                <td class="p-2">{{ consultation.acte.libelle_acte }}</td>
+                <td class="p-2">{{ consultation.medecin}}</td>
+                <td class="p-2">{{ consultation.acte.montant_acte}}</td>
+
+              </tr>
+              <tr class="font-semibold">
+                <td class="p-2" colspan="4" align="right">TOTAL</td>
+                <td class="p-2">{{consultation.acte.montant_acte}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BOUTON -->
+      <div class="text-right">
+        <button
+        onclick="ajouterActe()"
+      type="button"
+          class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md text-sm transition"
+          
+        >
+          Ajouter à la facture
+        </button>
+      </div>
+    </div>
+</div>
+    <!-- FACTURE -->
+    <div class="col-span-1 bg-white rounded-2xl shadow-md p-6 space-y-4">   
+        <div class="bg-white rounded-2xl shadow-md p-6 space-y-6">
+            <h2 class="text-xl font-semibold text-orange-600">Ajouter une facture</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <form method="post" class="space-y-4 w-[100%]" action="">
+                    {% if form.non_field_errors %}
+                      <p class="text-red-500 text-xs mt-1">{{ form.non_field_errors }}</p>
+                    {% endif %}
+                    {% if form.errors %}
+                      <p class="text-red-500 text-xs mt-1">Veuillez corriger les erreurs ci-contre.</p>
+                    {% endif %}
+                    {% csrf_token %}
+                    <input type="hidden" name="consultation_id" value="{{ consultation.id }}" />
+                    {% for field in form %}
+                      <div>
+                        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                          {{ field.label }}
+                        </label>
+                        {{ field }}
+                        {% if field.errors %}
+                          <p class="text-red-500 text-xs mt-1">{{ field.errors }}</p>
+                        {% endif %}
+                      </div>
+                      <script>
+                        document.getElementById("{{ field.id_for_label }}")?.classList.add("w-full", "border", "border-gray-300", "rounded-md", "px-3", "py-2", "mt-1", "text-sm");
+                      </script>
+                    {% endfor %}
+
+ 
+                    <div class="text-right pt-4">
+                      <button
+                        type="submit"
+                        class="bg-green-500 hover:bg-green-600 text-white text-sm px-6 py-2 rounded-md transition"
+                      >
+                        CRÉER
+                      </button>
+                    </div>
+                  </form>
+                  
+            </div>
+
+          </div>
+    </div>
+    
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+

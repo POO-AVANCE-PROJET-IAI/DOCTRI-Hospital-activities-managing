@@ -31,10 +31,13 @@
                   <div class="font-semibold text-left">Code</div>
                 </th>
                 <th class="p-2 whitespace-nowrap">
-                  <div class="font-semibold text-left">Date</div>
+                  <div class="font-semibold text-left">Date consultation</div>
                 </th>
                 <th class="p-2 whitespace-nowrap">
                   <div class="font-semibold text-left">Date fin validite</div>
+                </th>
+                <th class="p-2 whitespace-nowrap">
+                  <div class="font-semibold text-center">Patient associé</div>
                 </th>
                 <th class="p-2 whitespace-nowrap">
                   <div class="font-semibold text-center">
@@ -44,9 +47,7 @@
                 <th class="p-2 whitespace-nowrap">
                   <div class="font-semibold text-center">Médécin associé</div>
                 </th>
-                <th class="p-2 whitespace-nowrap">
-                  <div class="font-semibold text-center">Patient associé</div>
-                </th>
+
                 <th class="p-2 whitespace-nowrap">
                   <div class="font-semibold text-center">Consult. enr. Par</div>
                 </th>
@@ -72,18 +73,11 @@
                   </div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
+                  <div class="text-left">{{consultation.dateconsultation}}</div>
+                </td>
+                <td class="p-2 whitespace-nowrap">
                   <div class="text-left">
                     {{consultation.datefinvaliditeconsultation}}
-                  </div>
-                </td>
-                <td class="p-2 whitespace-nowrap">
-                  <div class="text-left font-medium text-gray-800">
-                    {{consultation.acte.libelle}}
-                  </div>
-                </td>
-                <td class="p-2 whitespace-nowrap">
-                  <div class="text-lg text-center">
-                    {{consultation.medecin.nom}} {{consultation.medecin.prenom}}
                   </div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
@@ -91,47 +85,121 @@
                     {{consultation.patient.nom}} {{consultation.patient.prenom}}
                   </div>
                 </td>
-                <td class="p-2 whitespace-nowrap text-green-500">
+                <td class="p-2 whitespace-nowrap">
+                  <div class="text-center font-medium text-gray-800">
+                    {{ consultation.acte.libelle_acte|default:"--" }}
+                  </div>
+                </td>
+                <td class="p-2 whitespace-nowrap">
                   <div class="text-lg text-center">
-                    {{consultation.utiilisateur.email}}
+                    {{consultation.medecin.nom|default:'-'}}
+                    {{consultation.medecin.prenom|default:'-'}}
+                  </div>
+                </td>
+
+                <td class="p-2 whitespace-nowrap">
+                  <div class="text-lg text-center">
+                    {{consultation.utilisateur.email}}
                   </div>
                 </td>
                 <td class="p-2 whitespace-nowrap">
                   <div
                     class="text-lg text-center flex justify-center items-center gap-x-2"
                   >
-                    <a href="">
+                    <a
+                      href="{% url 'consultation.add.acte' consultation_id=consultation.id patient_id=consultation.patient.id%}"
+                      class="inline-block"
+                      title="Actes Médicaux"
+                    >
                       <svg
-                        class="h-[20px] w-[20px] text-blue-500"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        width="20px"
+                        height="20px"
+                        viewBox="-2 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="#000000"
                       >
-                        <path
-                          d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
-                        />
-                        <circle cx="12" cy="12" r="3" />
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g
+                          id="SVGRepo_tracerCarrier"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></g>
+                        <g id="SVGRepo_iconCarrier">
+                          <g id="medical-record" transform="translate(-4 -2)">
+                            <path
+                              id="secondary"
+                              fill="#1c71d8"
+                              d="M18,3H15V6a1,1,0,0,1-1,1H10A1,1,0,0,1,9,6V3H6A1,1,0,0,0,5,4V20a1,1,0,0,0,1,1H18a1,1,0,0,0,1-1V4A1,1,0,0,0,18,3Z"
+                            ></path>
+                            <path
+                              id="primary"
+                              d="M18,21H6a1,1,0,0,1-1-1V4A1,1,0,0,1,6,3H18a1,1,0,0,1,1,1V20A1,1,0,0,1,18,21ZM9,3h6V6a1,1,0,0,1-1,1H10A1,1,0,0,1,9,6Zm3,13V12m2,2H10"
+                              fill="none"
+                              stroke="#27272a"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                            ></path>
+                          </g>
+                        </g>
                       </svg>
                     </a>
 
-                    <a href="">
+                    <a href="{% url 'ordonnance.create' consultation.id %}">
                       <svg
-                        class="text-yellow-500"
+                        fill="#3c3c9f"
+                        version="1.1"
+                        id="Capa_1"
                         xmlns="http://www.w3.org/2000/svg"
-                        x="0px"
-                        y="0px"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 50 50"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 114.882 114.881"
+                        xml:space="preserve"
                       >
-                        <path
-                          d="M 43.050781 1.9746094 C 41.800781 1.9746094 40.549609 2.4503906 39.599609 3.4003906 L 38.800781 4.1992188 L 45.699219 11.099609 L 46.5 10.300781 C 48.4 8.4007812 48.4 5.3003906 46.5 3.4003906 C 45.55 2.4503906 44.300781 1.9746094 43.050781 1.9746094 z M 37.482422 6.0898438 A 1.0001 1.0001 0 0 0 36.794922 6.3925781 L 4.2949219 38.791016 A 1.0001 1.0001 0 0 0 4.0332031 39.242188 L 2.0332031 46.742188 A 1.0001 1.0001 0 0 0 3.2578125 47.966797 L 10.757812 45.966797 A 1.0001 1.0001 0 0 0 11.208984 45.705078 L 43.607422 13.205078 A 1.0001 1.0001 0 1 0 42.191406 11.794922 L 9.9921875 44.09375 L 5.90625 40.007812 L 38.205078 7.8085938 A 1.0001 1.0001 0 0 0 37.482422 6.0898438 z"
-                        ></path>
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g
+                          id="SVGRepo_tracerCarrier"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></g>
+                        <g id="SVGRepo_iconCarrier">
+                          <g>
+                            <path
+                              d="M68.222,26.486c1.655,0,3.026,1.356,3.026,3.026v2.654h2.648c1.667,0,3.026,1.354,3.026,3.026 c0,1.67-1.359,3.026-3.026,3.026h-2.648v2.65c0,1.67-1.371,3.026-3.026,3.026c-1.679,0-3.026-1.356-3.026-3.026v-2.65h-2.653 c-1.673,0-3.026-1.356-3.026-3.026c0-1.673,1.354-3.026,3.026-3.026h2.653v-2.654C65.195,27.836,66.543,26.486,68.222,26.486z M90.115,12.998v98.857c0,1.667-1.371,3.026-3.026,3.026H8.027c-1.664,0-3.026-1.359-3.026-3.026V12.998 c0-1.673,1.362-3.026,3.026-3.026h19.86V3.026c0-1.67,1.36-3.026,3.026-3.026h33.289c1.655,0,3.027,1.356,3.027,3.026v6.939h19.859 C88.756,9.971,90.115,11.319,90.115,12.998z M33.939,18.164h27.237V6.059H33.939V18.164z M84.062,16.024H67.229v5.166 c0,1.673-1.372,3.026-3.027,3.026H30.913c-1.667,0-3.026-1.354-3.026-3.026v-5.166H11.053v92.805h73.009V16.024z M74.605,50.697 H20.507c-1.676,0-3.026,1.356-3.026,3.026c0,1.673,1.351,3.026,3.026,3.026h54.098c1.667,0,3.026-1.354,3.026-3.026 C77.632,52.053,76.272,50.697,74.605,50.697z M74.605,64.699H20.507c-1.676,0-3.026,1.348-3.026,3.027 c0,1.666,1.351,3.025,3.026,3.025h54.098c1.667,0,3.026-1.359,3.026-3.025C77.632,66.046,76.272,64.699,74.605,64.699z M74.605,78.696H20.507c-1.676,0-3.026,1.359-3.026,3.026s1.351,3.026,3.026,3.026h54.098c1.667,0,3.026-1.359,3.026-3.026 C77.632,80.043,76.272,78.696,74.605,78.696z M74.605,92.693H20.507c-1.676,0-3.026,1.348-3.026,3.026 c0,1.667,1.351,3.026,3.026,3.026h54.098c1.667,0,3.026-1.359,3.026-3.026C77.632,94.041,76.272,92.693,74.605,92.693z M103.592,46.116c-3.476,0-6.289,2.819-6.289,6.289v48.575c0,2.352,1.348,4.326,3.263,5.402v5.473c0,1.667,1.348,3.026,3.026,3.026 c1.667,0,3.026-1.359,3.026-3.026v-5.473c1.915-1.076,3.263-3.051,3.263-5.402V52.405 C109.881,48.935,107.056,46.116,103.592,46.116z"
+                            ></path>
+                          </g>
+                        </g>
                       </svg>
                     </a>
+
+                    <a href="{% url 'ordonnance.create' consultation.id %}">
+                      <svg
+                        fill="#3c3c9f"
+                        version="1.1"
+                        id="Capa_1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 114.882 114.881"
+                        xml:space="preserve"
+                      >
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g
+                          id="SVGRepo_tracerCarrier"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></g>
+                        <g id="SVGRepo_iconCarrier">
+                          <g>
+                            <path
+                              d="M68.222,26.486c1.655,0,3.026,1.356,3.026,3.026v2.654h2.648c1.667,0,3.026,1.354,3.026,3.026 c0,1.67-1.359,3.026-3.026,3.026h-2.648v2.65c0,1.67-1.371,3.026-3.026,3.026c-1.679,0-3.026-1.356-3.026-3.026v-2.65h-2.653 c-1.673,0-3.026-1.356-3.026-3.026c0-1.673,1.354-3.026,3.026-3.026h2.653v-2.654C65.195,27.836,66.543,26.486,68.222,26.486z M90.115,12.998v98.857c0,1.667-1.371,3.026-3.026,3.026H8.027c-1.664,0-3.026-1.359-3.026-3.026V12.998 c0-1.673,1.362-3.026,3.026-3.026h19.86V3.026c0-1.67,1.36-3.026,3.026-3.026h33.289c1.655,0,3.027,1.356,3.027,3.026v6.939h19.859 C88.756,9.971,90.115,11.319,90.115,12.998z M33.939,18.164h27.237V6.059H33.939V18.164z M84.062,16.024H67.229v5.166 c0,1.673-1.372,3.026-3.027,3.026H30.913c-1.667,0-3.026-1.354-3.026-3.026v-5.166H11.053v92.805h73.009V16.024z M74.605,50.697 H20.507c-1.676,0-3.026,1.356-3.026,3.026c0,1.673,1.351,3.026,3.026,3.026h54.098c1.667,0,3.026-1.354,3.026-3.026 C77.632,52.053,76.272,50.697,74.605,50.697z M74.605,64.699H20.507c-1.676,0-3.026,1.348-3.026,3.027 c0,1.666,1.351,3.025,3.026,3.025h54.098c1.667,0,3.026-1.359,3.026-3.025C77.632,66.046,76.272,64.699,74.605,64.699z M74.605,78.696H20.507c-1.676,0-3.026,1.359-3.026,3.026s1.351,3.026,3.026,3.026h54.098c1.667,0,3.026-1.359,3.026-3.026 C77.632,80.043,76.272,78.696,74.605,78.696z M74.605,92.693H20.507c-1.676,0-3.026,1.348-3.026,3.026 c0,1.667,1.351,3.026,3.026,3.026h54.098c1.667,0,3.026-1.359,3.026-3.026C77.632,94.041,76.272,92.693,74.605,92.693z M103.592,46.116c-3.476,0-6.289,2.819-6.289,6.289v48.575c0,2.352,1.348,4.326,3.263,5.402v5.473c0,1.667,1.348,3.026,3.026,3.026 c1.667,0,3.026-1.359,3.026-3.026v-5.473c1.915-1.076,3.263-3.051,3.263-5.402V52.405 C109.881,48.935,107.056,46.116,103.592,46.116z"
+                            ></path>
+                          </g>
+                        </g>
+                      </svg>
+                    </a>
+                    <a href="{% url 'ordonnance.create' consultation.id %}">
+                    </a>
+
+                    <a href=""> </a>
 
                     <a href="">
                       <svg

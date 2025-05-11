@@ -21,6 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
     path('patients', include('tomegah_patient.urls')),
-     path('consultations', include('tomegah_consultation.urls')),
+    path('consultations', include('tomegah_consultation.urls')),
+    path('factures', include('tomegah_facture.urls')),
+    path('ordonnances', include('tomegah_ordonnance.urls')),
 
 ]

@@ -8,6 +8,6 @@ class Medecin(Personne):
     titre_medecin = models.CharField(max_length=50)
     specialites = models.ManyToManyField('tomegah_specialite.Specialite', through='tomegah_specialite.AffecterSpecialite', blank=True)
     def __str__(self):
-        return f"Dr. {self.nom}"
+        return f"Dr. {self.nom} {self.prenom} "
 
     
