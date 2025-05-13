@@ -6,7 +6,6 @@
   {% csrf_token %}
 
   {% if selected_consultation %}
-  <input type="hidden" name="consultation_id" value="{{ selected_consultation.id }}">
 {% endif %}
 
   {% for field in ordonnanceForm %}
@@ -19,7 +18,7 @@
     </div>
   {% endfor %}
 
-  <input type="hidden" id="id_consultation" name="consultation" />
+  <input type="hidden" name="consultation" id="id_consultation" value="{{ selected_consultation.id }}">
 
   <hr class="my-6 border-t" />
 

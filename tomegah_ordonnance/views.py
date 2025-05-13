@@ -40,7 +40,7 @@ def home(request):
         if ordonnanceForm.is_valid() and detailFormset.is_valid():
             ordonnance = ordonnanceForm.save(commit=False)
             if not selected_consultation:
-                consultation_id = request.POST.get("consultation_id")
+                consultation_id = request.POST.get("consultation")  # Utiliser le bon nom
                 if consultation_id:
                     try:
                         selected_consultation = Consultation.objects.get(id=consultation_id)
@@ -53,12 +53,16 @@ def home(request):
             ordonnance.save()
 
             for detail_form in detailFormset:
-                detail = detail_form.save(commit=False)
-                detail.ordonnance = ordonnance
-                detail.save()
+                if detail_form.cleaned_data and not detail_form.cleaned_data.get('DELETE', False):
+                    code = detail_form.cleaned_data.get("code")
+                    if code:  # ✅ n'enregistre que si le code est présent
+                        detail = detail_form.save(commit=False)
+                        detail.ordonnance = ordonnance
+                        detail.save()
+
 
             messages.success(request, "Ordonnance et médicaments créés avec succès.")
-            return redirect(f"{reverse('ordonnance_home')}?consultation_id={selected_consultation.id}")
+            return redirect(f"{reverse('ordonnance.index')}?consultation_id={selected_consultation.id}&done=1")
         else:
             messages.error(request, "Erreur dans le formulaire.")
     else:

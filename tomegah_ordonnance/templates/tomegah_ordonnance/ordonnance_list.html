@@ -12,7 +12,7 @@
       {% if consultations %}
         {% include "partials/_consultation_table.html" %}
       {% else %}
-        <p class="text-red-500 font-medium">Aucune consultation choisie</p>
+        <p class="text-red-500 font-medium">Aucune consultation choisie <a href="{%url 'consultations.index'%}" class="text-blue-600">retourner choisir une consultation</a></p>
       {% endif %}
     </div>
 
@@ -64,8 +64,27 @@
       if (selectedRadio) {
         document.getElementById("id_consultation").value = selectedRadio.value;
         alert("Consultation ajoutée au formulaire !");
+        localStorage.setItem("selectedConsultationId", selectedRadio.value);
       } else {
         alert("Veuillez sélectionner une consultation.");
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const storedId = localStorage.getItem("selectedConsultationId");
+  
+      // S'il n'y a pas de consultation dans l'URL mais qu'on en a dans le localStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      if (!urlParams.has("consultation_id") && storedId) {
+        // Rediriger avec l'ID stocké
+        window.location.href = `${window.location.pathname}?consultation_id=${storedId}`;
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("done")) {
+        localStorage.removeItem("selectedConsultationId");
       }
     });
 </script>
