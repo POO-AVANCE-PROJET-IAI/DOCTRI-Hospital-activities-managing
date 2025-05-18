@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ordonnance {{ ordonnance.code_ordonnance }}</title>
+    <style>
+        body {
+            font-family: 'DejaVu Sans', sans-serif;
+            margin: 40px;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f5f5f5;
+        }
+
+        .print-button {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            align-items: center;
+        }
+
+        .print-button button {
+            background-color: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin:10px
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .print-button .download_pdf{
+            background-color:rgb(37, 180, 24);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .print-button .download_pdf a{
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>DOCTRI</h1>
+    <h2>Ordonnance Médicale</h2>
+    <p><strong>Date :</strong> {{ ordonnance.date_ordonnance|date:"d/m/Y" }}</p>
+    <p><strong>Médecin :</strong> Dr {{ ordonnance.medecin.nom }} {{ ordonnance.medecin.prenom }}</p>
+    <p><strong>Consultation :</strong> {{ ordonnance.consultation.acte }}</p>
+</div>
+
+<div class="section">
+    <h2>Liste des médicaments prescrits</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Médicament</th>
+                <th>Posologie</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detail in details %}
+            <tr>
+                <td>{{ detail.medicament }}</td>
+                <td>{{ detail.posologie_medicament }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="print-button">
+    <button onclick="window.print()">Imprimer l’ordonnance</button>
+
+    <button class="download_pdf"><a href="{% url 'telecharger_ordonnance_pdf' ordonnance.id %}" class="text-green-600 hover:underline" target="_blank">
+        Télécharger en PDF
+    </a></button>
+    
+</div>
+
+<div class="footer">
+    Merci de respecter rigoureusement cette ordonnance. En cas de doute, contactez votre médecin.
+</div>
+
+</body>
+</html>

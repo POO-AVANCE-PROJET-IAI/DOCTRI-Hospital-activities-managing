@@ -32,26 +32,26 @@
 </style>
 
 <div class="flex justify-between items-center py-5">
-  <div class="w-[30%] md:w-full px-3 mb-6">
+  <div class="w-[10%] px-3 mb-6">
     <button id="addPatientBtn"
-      class="cursor-pointer flex items-center justify-between appearance-none block w-[20%] bg-gray-800 text-gray-100 font-bold border border-gray-200 rounded-lg py-3 px-3 leading-tight hover:bg-gray-600 focus:outline-none focus:bg-white focus:border-gray-600"
+      class="cursor-pointer flex items-center justify-between appearance-none block w-full bg-gray-800 text-gray-100 font-bold border border-gray-200 rounded-lg py-3 px-3 leading-tight hover:bg-gray-600 focus:outline-none focus:bg-white focus:border-gray-600"
     >
     {% if request.resolver_match.view_name != "patients.index" %}
   <a href="{{ lien_nouveau }}"
-    class="cursor-pointer flex items-center justify-between appearance-none block w-[20%] bg-gray-800 text-gray-100 font-bold rounded-lg py-3 px-3 leading-tight hover:bg-gray-600 focus:outline-none focus:bg-white">
+    class="cursor-pointer flex items-center justify-between appearance-none block w-full bg-gray-800 text-gray-100 font-bold rounded-lg py-3 px-3 leading-tight hover:bg-gray-600 focus:outline-none focus:bg-white">
     <span> + </span>
     Nouveau
   </a>
   {%else%}
   <a href=""
-  class="cursor-pointer flex items-center justify-between appearance-none block w-[20%] bg-gray-800 text-gray-100 font-bold rounded-lg py-3 px-3 leading-tight hover:bg-gray-600 focus:outline-none focus:bg-white">
+  class="cursor-pointer flex items-center justify-between appearance-none block w-full bg-gray-800 text-gray-100 font-bold rounded-lg py-3 px-3 leading-tight hover:bg-gray-600 focus:outline-none focus:bg-white">
   <span> + </span>
   Nouveau
 </a>
 {% endif %}
   </div>
 
-  <div class="w-[60%]">
+  <div class="w-[50%]">
     <div class="flex flex-col p-2 py-6">
       <div
         class="bg-white items-center justify-between w-full flex rounded-full shadow-lg p-2 mb-5 sticky"

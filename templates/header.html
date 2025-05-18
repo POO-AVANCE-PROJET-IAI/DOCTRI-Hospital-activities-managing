@@ -8,7 +8,7 @@
       <div class="flex size-16 items-center justify-center p-4 mx-auto">
         <span
           class="grid size-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
-          >L</span
+          >  {{ request.user.first_name|default:""|first|upper }}{{ request.user.last_name|default:""|first|upper }}</span
         >
       </div>
 
@@ -621,7 +621,7 @@
                 >
               </a>
 
-              <a
+              {% comment %} <a
                 href="#"
                 class="group relative flex justify-center rounded-sm px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               >
@@ -643,7 +643,7 @@
                   class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
                   >Account</span
                 >
-              </a>
+              </a> {% endcomment %}
             </li>
 
             <li></li>
